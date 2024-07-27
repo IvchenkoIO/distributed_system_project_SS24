@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Logs</title>
+</head>
+<body>
+    <h1>Account info</h1>
+    <a href="/monitor_t">All logs</a>
+    <form method="POST" action="/">
+        <label for="fname">First Name:</label>
+        <input type="text" id="fname" name="fname" placeholder="Search by first name">
+        <label for="lname">Last Name:</label>
+        <input type="text" id="lname" name="lname" placeholder="Search by last name">
+        <button type="submit">Search</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Balance</th>
+                <th>ID</th>
+                <th>Logs</th> <!-- New column for logs link -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.fname }}</td>
+                <td>{{ log.lname }}</td>
+                <td>{{ log.balance }}</td>
+                <td>{{ log.account_id }}</td>
+                <td>
+                    <form method="POST" action="/search_t">
+                        <input type="hidden" name="account_id" value="{{ log.account_id }}">
+                        <button type="submit" style="background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;">View Logs</button>
+                    </form>
+                </td>  <!-- Link to view logs for the account -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,23 @@
+auth:
+  username: admin
+  password: password
+  database: ds_proj_db
+
+primary:
+  initdb:
+    scripts:
+      init.sql: |
+        CREATE TABLE IF NOT EXISTS accounts (
+          acc_id UUID PRIMARY KEY,
+          first_name VARCHAR(50),
+          last_name VARCHAR(50),
+          balance DECIMAL(15, 2)
+        );
+        CREATE TABLE IF NOT EXISTS logs (
+          log_id UUID PRIMARY KEY,
+          date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+          account_id UUID REFERENCES accounts(acc_id),
+          operation VARCHAR(1),
+          amount DECIMAL(15, 2),
+          info JSONB
+        );

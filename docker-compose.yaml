@@ -1,0 +1,31 @@
+services:
+  manager:
+    build: manager
+    image: dsp-manager
+    depends_on:
+      - mysql
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    networks:
+      - database
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+    ports:
+      - 3306:3306
+    volumes:
+      - ./_volumes/mysql:/var/lib/mysql
+    networks:
+      - database
+
+networks:
+  database:

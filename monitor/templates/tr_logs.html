@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Logs</title>
+</head>
+<body>
+    <h1>Transaction info</h1>
+    <a href="/">Go to Home</a>
+    <form method="POST" action="/search_t">
+        <input type="hidden" name="account_id" value="{{ account_id }}">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date">
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date">
+        <button type="submit">Search</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Log id</th>
+                <th>Account id</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Operation</th>
+                <th>Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tr_log in tr_logs %}
+            <tr>
+                <td>{{ tr_log.log_id }}</td>
+                 <td>
+                    <form method="POST" action="/search_t">
+                        <input type="hidden" name="account_id" value="{{ tr_log.account_id }}">
+                        <button type="submit" style="background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;">{{ tr_log.account_id }}</button>
+                    </form>
+                </td>
+                <td>{{ tr_log.amount }}</td>
+                <td>{{ tr_log.date }}</td>
+                <td>{{ tr_log.operation }}</td>
+                <td>{{ tr_log.info }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
